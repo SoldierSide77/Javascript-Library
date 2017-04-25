@@ -10,8 +10,6 @@ function newBook(author, title, numberOfPages, publishedDate, series, seriesOrde
 var myLibrary = function(){
 
 };
-//Instance of my library object, using the myLibrary prototype.
-var testLibrary = new myLibrary();
 
 var myNewBook1 = new newBook("John Sandford", "Rules of Prey", 301, new Date("07/24/1989"), "Lucas Davenport", 1);
 var myNewBook2 = new newBook("John Sandford", "Shadow Prey", 349, new Date("02/28/1990"), "Lucas Davenport", 2);
@@ -36,31 +34,18 @@ myLibrary.prototype.myArray = new Array();
 //Purpose: Add a book object to your books array.
 //Return: boolean true if it is not already added, false if it is already added.
 myLibrary.prototype.addBook = function(myNewBook){
-  this.myArray.push(myNewBook);
-  console.log("Array length is: " + this.myArray.length);
-  console.log(this.myArray[0].title);
-  //use a for loop to compare the title of each member of the array to the title of the book passed(myNewBook)
-  for(var i = 0; i > this.myArray.length; i++){
-    console.log("TEST");
-    if(this.myArray[i].title == myNewBook.title){
-      return true;
-    } else {
-      this.myArray.push(myNewBook);
-      console.log("Array length is: " + this.myArray.length);
-      return false;
-    }
+  for(var i = 0; i < this.length; i++){
+    myArray.push(myNewBook1);
+    console.log(myArray.length);
   }
 }
-
-// testLibrary.addBook(myNewBook2);
-// console.log(testLibrary.myArray[0].title);
-
+console.log(myLibrary);
+console.log(this);
 
 //Purpose: Remove book from from the books array by its title.
 //Return: boolean true if the book(s) were removed, false if no books match.
 myLibrary.prototype.removeBookByTitle = function(title){
-  this.myArray.pop(title);
-  console.log(this.myArray.length);
+
 }
 
 //Purpose: Remove a specific book from your books array by the author name.
@@ -104,3 +89,6 @@ myLibrary.prototype.getAuthors = function(getAuthors){
 myLibrary.prototype.getRandomAuthorName = function(){
 
 }
+
+//Example of how to make another library object, using the myLibrary prototype.
+var horrorLibrary = new myLibrary();
