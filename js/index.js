@@ -27,8 +27,8 @@ var myNewBook11 = new newBook("Stephen King", "The Waste Lands", 721, new Date("
 var myNewBook12 = new newBook("Stephen King", "Song of Susannah", 647, new Date("08/14/2006"), "The Dark Tower", 6);
 var myNewBook13 = new newBook("Stephen King", "The Wind Through the Keyhole", 335, new Date("05/06/2012"), "The Dark Tower", 8);
 var myNewBook14 = new newBook("Stephen King", "Christine", 601, new Date("07/24/1989"), "", 0);
-var mynewbook15 = new newBook("Chuck Palahniuk", "Fight Club", 426, new Date("08/28/1996"), "", 0);
-var mynewbook16 = new newBook("James Rollins", "The Seventh Plague", 426, new Date("12/13/2016"), "Sigma Force", 12);
+var myNewBook15 = new newBook("Chuck Palahniuk", "Fight Club", 426, new Date("08/28/1996"), "", 0);
+var myNewBook16 = new newBook("James Rollins", "The Seventh Plague", 426, new Date("12/13/2016"), "Sigma Force", 12);
 var myNewBook17 = new newBook("Stephen King", "The Dark Tower", 876, new Date("09/30/2007"), "The Dark Tower", 7);
 
 myLibrary.prototype.myArray = new Array();
@@ -36,32 +36,47 @@ myLibrary.prototype.myArray = new Array();
 //Purpose: Add a book object to your books array.
 //Return: boolean true if it is not already added, false if it is already added.
 myLibrary.prototype.addBook = function(myNewBook){
-  this.myArray.push(myNewBook);
-  console.log("Array length is: " + this.myArray.length);
-  console.log(this.myArray[0].title);
-  //use a for loop to compare the title of each member of the array to the title of the book passed(myNewBook)
-  for(var i = 0; i > this.myArray.length; i++){
-    console.log("TEST");
-    if(this.myArray[i].title == myNewBook.title){
-      return true;
-    } else {
+  for(var i = 0; i <= this.myArray.length; i++){
+    if(this.myArray.length > 0){
+      if(this.myArray[i].title == myNewBook.title){   //array length is not 0, and the title has already been added; return true.
+        console.log("Error: " + myNewBook.title + " already exists in the library. Title not added.");
+        return true;
+      } else {  //array length is not 0, and title has not yet been added; add the book.
+        this.myArray.push(myNewBook);
+        console.log(myNewBook.title + " has been added to the library.");
+        return false;
+      }
+    } else {  //array length is 0; add the book.
       this.myArray.push(myNewBook);
-      console.log("Array length is: " + this.myArray.length);
+      console.log(myNewBook.title + " has been added to the library.");
       return false;
     }
   }
 }
 
-// testLibrary.addBook(myNewBook2);
-// console.log(testLibrary.myArray[0].title);
+testLibrary.addBook(myNewBook16);
 
 
 //Purpose: Remove book from from the books array by its title.
 //Return: boolean true if the book(s) were removed, false if no books match.
 myLibrary.prototype.removeBookByTitle = function(title){
-  this.myArray.pop(title);
-  console.log(this.myArray.length);
+  for(var i = 0; i < this.myArray.length; i++){
+    if(this.myArray.length > 0){
+      if(this.myArray[i].title == title){
+        this.myArray.splice([i],1);
+        console.log(title + " removed from library.");
+        return true;
+      } else {
+        console.log("Error: " + title + " not found in library.");
+        return false;
+      }
+    } else { //array was empty; no match possible.
+      console.log("Error: " + title + " not found in library.");
+      return false;
+    }
+  }
 }
+
 
 //Purpose: Remove a specific book from your books array by the author name.
 //Return: boolean true if the book(s) were removed, false if no books match.
@@ -69,11 +84,13 @@ myLibrary.prototype.removeBookByAuthor = function(authorName){
 
 }
 
+
 //Purpose: Return a random book object from your books array.
 //Return: book object if you find a book, null if there are no books.
 myLibrary.prototype.getRandomBook = function(){
 
 }
+
 
 //Purpose: Return all books that completely or partially matches the string title passed into the function.
 //Return: array of book objects if you find books with matching titles, empty array if no books are found.
@@ -81,11 +98,13 @@ myLibrary.prototype.getBookByTitle = function(title){
 
 }
 
+
 //Purpose: Finds all books where the author’s name partially or completely matches the authorName argument passed to the function.
 //Return: array of books if you find books with match authors, empty array if no books match.
 myLibrary.prototype.getBooksByAuthor = function(authorName){
 
 }
+
 
 //Purpose: Takes multiple books, in the form of an array of book objects, and adds the objects to your books array.
 //Return: number number of books successfully added, 0 if no books were added.
@@ -93,11 +112,13 @@ myLibrary.prototype.addBooks = function(books){
 
 }
 
+
 //Purpose: Find the distinct authors’ names from all books in your library.
 //Return: array of strings the names of all distinct authors, empty array if no books exist or if no authors exist.
 myLibrary.prototype.getAuthors = function(getAuthors){
 
 }
+
 
 //Purpose: Retrieves a random author name from your books collection.
 //Return: string author name, null if no books exist.
