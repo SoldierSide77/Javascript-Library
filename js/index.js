@@ -36,44 +36,58 @@ myLibrary.prototype.myArray = new Array();
 //Purpose: Add a book object to your books array.
 //Return: boolean true if it is not already added, false if it is already added.
 myLibrary.prototype.addBook = function(myNewBook){
-  for(var i = 0; i <= this.myArray.length; i++){
-    if(this.myArray.length > 0){
-      if(this.myArray[i].title == myNewBook.title){   //array length is not 0, and the title has already been added; return true.
-        console.log("Error: " + myNewBook.title + " already exists in the library. Title not added.");
-        return true;
-      } else {  //array length is not 0, and title has not yet been added; add the book.
+    if(this.myArray.length == 0){   //array is empty; add the book.
         this.myArray.push(myNewBook);
         console.log(myNewBook.title + " has been added to the library.");
-        return false;
+        return true;
+    } else {
+      var blnMatch = false;
+      for(var i = 0; i < this.myArray.length; i++){
+        if(this.myArray[i].title == myNewBook.title){
+          blnMatch = true;
+        }
       }
-    } else {  //array length is 0; add the book.
-      this.myArray.push(myNewBook);
-      console.log(myNewBook.title + " has been added to the library.");
-      return false;
+      if(blnMatch == true){   //the title has already been added. Abort.
+        console.log("Error: " + myNewBook.title + " already exists in the library. Title not added.");
+        return false;
+      } else {  //title has not yet been added; add the book.
+        this.myArray.push(myNewBook);
+        console.log(myNewBook.title + " has been added to the library.");
+        return true;
+      }
     }
-  }
 }
-
-testLibrary.addBook(myNewBook16);
 
 
 //Purpose: Remove book from from the books array by its title.
 //Return: boolean true if the book(s) were removed, false if no books match.
 myLibrary.prototype.removeBookByTitle = function(title){
-  for(var i = 0; i < this.myArray.length; i++){
-    if(this.myArray.length > 0){
+  var intRemoved = 0;
+  if(this.myArray.length > 0){
+    for(var i = 0; i < this.myArray.length; i++){
       if(this.myArray[i].title == title){
         this.myArray.splice([i],1);
-        console.log(title + " removed from library.");
-        return true;
-      } else {
-        console.log("Error: " + title + " not found in library.");
-        return false;
+        intRemoved++;
+
+//        console.log(title + " removed from library.");
+//        return true;
       }
-    } else { //array was empty; no match possible.
-      console.log("Error: " + title + " not found in library.");
-      return false;
+      // else {
+      //   console.log("Error: " + title + " not found in library.");
+      //   return false;
+      // }
+      if(intRemoved == true){
+
+      } else {
+
+      }
+
+
+
     }
+  } else { //array was empty; no match possible.
+    console.log("Error: " + title + " not found in library.");
+    return false;
   }
 }
 
@@ -81,7 +95,25 @@ myLibrary.prototype.removeBookByTitle = function(title){
 //Purpose: Remove a specific book from your books array by the author name.
 //Return: boolean true if the book(s) were removed, false if no books match.
 myLibrary.prototype.removeBookByAuthor = function(authorName){
+  var intRemoved = 0;
+  if(this.myArray.length > 0){
+    for(var i = 0; i < this.myArray.length; i++){
+      console.log(this.myArray[i].title);
+      if(this.myArray[i].author == authorName){
+        this.myArray.splice([i],1);
+        intRemoved++;
+        i--;
+      }
+    }
+  }
 
+  if (intRemoved > 0){
+    console.log(intRemoved + " books by " + authorName + " removed from library.");
+    return true;
+  } else {
+    console.log("Error: No books found by " + authorName + " in library.");
+    return false;
+  }
 }
 
 
