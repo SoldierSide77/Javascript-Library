@@ -31,6 +31,10 @@ var myNewBook15 = new newBook("Chuck Palahniuk", "Fight Club", 426, new Date("08
 var myNewBook16 = new newBook("James Rollins", "The Seventh Plague", 426, new Date("12/13/2016"), "Sigma Force", 12);
 var myNewBook17 = new newBook("Stephen King", "The Dark Tower", 876, new Date("09/30/2007"), "The Dark Tower", 7);
 var myNewBook18 = new newBook("John Sandford", "Golden Prey", 436, new Date("07/24/2017"), "Lucas Davenport", 24);
+var myNewBook19 = new newBook("Richard Bachman", "Blaze", 498, new Date("06/12/2001"), "", 0);
+var myNewBook20 = new newBook("J.K. Rowling", "Harry Potter and the Deathly Hallows", 843, new Date("10/14/2010"), "Harry Potter", 7);
+var myNewBook21 = new newBook("William Golding", "Lord of the Flies", 443, new Date("10/04/1959"), "", 0);
+var myNewBook22 = new newBook("J.R.R Tolkein", "The Hobbit", 640, new Date("01/09/1951"), "", 0);
 
 
 myLibrary.prototype.myArray = new Array();
@@ -190,7 +194,7 @@ myLibrary.prototype.addBooks = function(books){
     return 0;
   }
 }
-testLibrary.addBooks([myNewBook1, myNewBook10, myNewBook11, myNewBook2, myNewBook3, myNewBook16, myNewBook4, myNewBook7, myNewBook15]);
+testLibrary.addBooks([myNewBook1, myNewBook10, myNewBook16, myNewBook4, myNewBook7, myNewBook15, myNewBook19, myNewBook20, myNewBook21, myNewBook22]);
 
 
 //Purpose: Find the distinct authors’ names from all books in your library.
@@ -198,29 +202,19 @@ testLibrary.addBooks([myNewBook1, myNewBook10, myNewBook11, myNewBook2, myNewBoo
 myLibrary.prototype.getAuthors = function(){
   var authorsArray = [];
   var blnAuthorMatch = false;
-  for(var i = 0; i < this.myArray.length; i++){
+  for(var i = 0; i < this.myArray.length; i++){   //loop through each book in the library to get it's author.
     blnAuthorMatch = false;
     if(authorsArray.length > 0){
-      for(var j = 0; j < authorsArray.length; j++){
-        // console.log(this.myArray[i].title);
-        // console.log("authorsArray[j] = " + authorsArray[j] + " and this.myArray[i].author = " + this.myArray[i].author);
-        // console.log(authorsArray[j] == this.myArray[i].author);
-        if(authorsArray[j].toLowerCase() == this.myArray[i].author.toLowerCase()){   //only add the author if they haven't already been added.
-          // console.log("j = " + j);
-          // console.log("authorsArray = " + authorsArray[j]);
-          // console.log("i = " + i);
-          // console.log("this.myArray[i].author = " + this.myArray[i].author);
-          blnAuthorMatch = true;
+      for(var j = 0; j < authorsArray.length; j++){   //loop through all the author names that have already been added.
+        if(authorsArray[j].toLowerCase() == this.myArray[i].author.toLowerCase()){   //check if the author name would be a duplicate.
+          blnAuthorMatch = true;  //a duplicate was found. Don't add this author.
         }
       }
       if(blnAuthorMatch == false){
-        authorsArray.push(this.myArray[i].author);
-        // console.log(this.myArray[i].author + " added.");
-        // console.log("authorsArray is: " + authorsArray);
+        authorsArray.push(this.myArray[i].author);  //if the author isn't already in the list, add the author.
       }
     } else {
-    authorsArray.push(this.myArray[i].author);
-    // console.log("authorsArray is: " + authorsArray);
+    authorsArray.push(this.myArray[i].author);  //if the list of authors is empty, add the author.
     }
   }
 
@@ -234,5 +228,24 @@ myLibrary.prototype.getAuthors = function(){
 //Purpose: Retrieves a random author name from your books collection.
 //Return: string author name, null if no books exist.
 myLibrary.prototype.getRandomAuthorName = function(){
+  var authorsArray1 = [];
+  authorsArray1 = this.getAuthors();  //use the getAuthors function to get the names of all authors in the library.
 
+  if(testLibrary.myArray.length > 0){
+    var myRandom = Math.floor(Math.random() * authorsArray1.length);
+    return authorsArray1[myRandom];
+  }else {
+    return null;
+  }
+}
+
+//Extra credit ******************************************************************************************************
+//Purpose: Retrieves a book series, in series order.
+//Return: array of book objects, empty array if series doesn't exist.
+myLibrary.prototype.getSeriesInOrder = function(){
+    var seriesArray = [];
+    if(testLibrary.myArray.length > 0){
+
+    }
+      return seriesArray;
 }
