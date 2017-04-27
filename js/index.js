@@ -59,6 +59,12 @@ myLibrary.prototype.addBook = function(myNewBook){
     }
   }
 }
+// testLibrary.addBook(myNewBook1);
+// testLibrary.addBook(myNewBook18);
+// testLibrary.addBook(myNewBook2);
+// testLibrary.addBook(myNewBook12);
+// testLibrary.addBook(myNewBook16);
+
 
 
 //Purpose: Remove book from from the books array by its title.
@@ -67,7 +73,7 @@ myLibrary.prototype.removeBookByTitle = function(title){
   var intRemoved = false;
   if(this.myArray.length > 0){
     for(var i = 0; i < this.myArray.length; i++){
-      if(this.myArray[i].title == title){
+      if(this.myArray[i].title.toLowerCase() == title.toLowerCase()){
         this.myArray.splice([i],1);
         intRemoved = true;
       }
@@ -97,6 +103,7 @@ myLibrary.prototype.removeBookByTitle = function(title){
   // console.log("Error: " + title + " not found in library.");
   // return false;
 }
+//testLibrary.removeBookByTitle("prey");
 
 
 //Purpose: Remove a specific book from your books array by the author name.
@@ -106,7 +113,7 @@ myLibrary.prototype.removeBookByAuthor = function(authorName){
   if(this.myArray.length > 0){
     for(var i = 0; i < this.myArray.length; i++){
       console.log(this.myArray[i].title);
-      if(this.myArray[i].author == authorName){
+      if(this.myArray[i].author.toLowerCase() == authorName.toLowerCase()){
         this.myArray.splice([i],1);
         intRemoved++;
         i--;
@@ -122,6 +129,7 @@ myLibrary.prototype.removeBookByAuthor = function(authorName){
     return false;
   }
 }
+//testLibrary.removeBookByAuthor("king")
 
 
 //Purpose: Return a random book object from your books array.
@@ -134,41 +142,92 @@ myLibrary.prototype.getRandomBook = function(){
     return null;
   }
 }
+//testLibrary.getRandomBook();
 
 
 //Purpose: Return all books that completely or partially matches the string title passed into the function.
 //Return: array of book objects if you find books with matching titles, empty array if no books are found.
 myLibrary.prototype.getBookByTitle = function(title){
-  var searchArray = [];
+  var titleArray = [];
   for(var i = 0; i < this.myArray.length; i++){
     var searchTitle = this.myArray[i].title;
-    var regexpTest = new RegExp(title);
-    if(regexpTest.test(searchTitle) == true){
-      searchArray.push(this.myArray[i]);
+    var regexpTitle = new RegExp(title.toLowerCase());
+    if(regexpTitle.test(searchTitle.toLowerCase()) == true){
+      titleArray.push(this.myArray[i]);
     }
   }
-  return searchArray;
+  return titleArray;
 }
+//testLibrary.getBookByTitle("prey");
 
 
 //Purpose: Finds all books where the author’s name partially or completely matches the authorName argument passed to the function.
-//Return: array of books if you find books with match authors, empty array if no books match.
+//Return: array of books if you find books with matching authors, empty array if no books match.
 myLibrary.prototype.getBooksByAuthor = function(authorName){
-
+  var authorArray = [];
+  for(var i = 0; i < this.myArray.length; i++){
+    var regExpAuthor = new RegExp(authorName.toLowerCase());
+    if(regExpAuthor.test(this.myArray[i].author.toLowerCase()) == true){
+      authorArray.push(this.myArray[i]);
+    }
+  }
+  return authorArray;
 }
+//testLibrary.getBooksByAuthor("sandford");
 
 
 //Purpose: Takes multiple books, in the form of an array of book objects, and adds the objects to your books array.
-//Return: number number of books successfully added, 0 if no books were added.
+//Return: number - number of books successfully added, 0 if no books were added.
 myLibrary.prototype.addBooks = function(books){
-
+  for(var i = 0; i < books.length; i++){
+    this.myArray.push(books[i]);
+  }
+  if(this.myArray.length > 0){
+    console.log(this.myArray.length + " books added to library.");
+    return this.myArray.length;
+  } else {
+    console.log("Error: 0 books added to library. Please check your request and try again.");
+    return 0;
+  }
 }
+testLibrary.addBooks([myNewBook1, myNewBook10, myNewBook11, myNewBook2, myNewBook3, myNewBook16, myNewBook4, myNewBook7, myNewBook15]);
 
 
 //Purpose: Find the distinct authors’ names from all books in your library.
 //Return: array of strings the names of all distinct authors, empty array if no books exist or if no authors exist.
-myLibrary.prototype.getAuthors = function(getAuthors){
+myLibrary.prototype.getAuthors = function(){
+  var authorsArray = [];
+  var blnAuthorMatch = false;
+  for(var i = 0; i < this.myArray.length; i++){
+    blnAuthorMatch = false;
+    if(authorsArray.length > 0){
+      for(var j = 0; j < authorsArray.length; j++){
+        // console.log(this.myArray[i].title);
+        // console.log("authorsArray[j] = " + authorsArray[j] + " and this.myArray[i].author = " + this.myArray[i].author);
+        // console.log(authorsArray[j] == this.myArray[i].author);
+        if(authorsArray[j].toLowerCase() == this.myArray[i].author.toLowerCase()){   //only add the author if they haven't already been added.
+          // console.log("j = " + j);
+          // console.log("authorsArray = " + authorsArray[j]);
+          // console.log("i = " + i);
+          // console.log("this.myArray[i].author = " + this.myArray[i].author);
+          blnAuthorMatch = true;
+        }
+      }
+      if(blnAuthorMatch == false){
+        authorsArray.push(this.myArray[i].author);
+        // console.log(this.myArray[i].author + " added.");
+        // console.log("authorsArray is: " + authorsArray);
+      }
+    } else {
+    authorsArray.push(this.myArray[i].author);
+    // console.log("authorsArray is: " + authorsArray);
+    }
+  }
 
+  if(authorsArray.length > 0){
+    console.log(authorsArray.length + " authors found in the library.");
+  }
+  return authorsArray;
 }
 
 
