@@ -30,65 +30,72 @@ var myNewBook14 = new newBook("Stephen King", "Christine", 601, new Date("07/24/
 var myNewBook15 = new newBook("Chuck Palahniuk", "Fight Club", 426, new Date("08/28/1996"), "", 0);
 var myNewBook16 = new newBook("James Rollins", "The Seventh Plague", 426, new Date("12/13/2016"), "Sigma Force", 12);
 var myNewBook17 = new newBook("Stephen King", "The Dark Tower", 876, new Date("09/30/2007"), "The Dark Tower", 7);
+var myNewBook18 = new newBook("John Sandford", "Golden Prey", 436, new Date("07/24/2017"), "Lucas Davenport", 24);
+
 
 myLibrary.prototype.myArray = new Array();
 
 //Purpose: Add a book object to your books array.
 //Return: boolean true if it is not already added, false if it is already added.
 myLibrary.prototype.addBook = function(myNewBook){
-    if(this.myArray.length == 0){   //array is empty; add the book.
-        this.myArray.push(myNewBook);
-        console.log(myNewBook.title + " has been added to the library.");
-        return true;
-    } else {
-      var blnMatch = false;
-      for(var i = 0; i < this.myArray.length; i++){
-        if(this.myArray[i].title == myNewBook.title){
-          blnMatch = true;
-        }
-      }
-      if(blnMatch == true){   //the title has already been added. Abort.
-        console.log("Error: " + myNewBook.title + " already exists in the library. Title not added.");
-        return false;
-      } else {  //title has not yet been added; add the book.
-        this.myArray.push(myNewBook);
-        console.log(myNewBook.title + " has been added to the library.");
-        return true;
+  if(this.myArray.length == 0){   //array is empty; add the book.
+      this.myArray.push(myNewBook);
+      console.log(myNewBook.title + " has been added to the library.");
+      return true;
+  } else {
+    var blnMatch = false;
+    for(var i = 0; i < this.myArray.length; i++){
+      if(this.myArray[i].title == myNewBook.title){
+        blnMatch = true;
       }
     }
+    if(blnMatch == true){   //the title has already been added. Abort.
+      console.log("Error: " + myNewBook.title + " already exists in the library. Title not added.");
+      return false;
+    } else {  //title has not yet been added; add the book.
+      this.myArray.push(myNewBook);
+      console.log(myNewBook.title + " has been added to the library.");
+      return true;
+    }
+  }
 }
 
 
 //Purpose: Remove book from from the books array by its title.
 //Return: boolean true if the book(s) were removed, false if no books match.
 myLibrary.prototype.removeBookByTitle = function(title){
-  var intRemoved = 0;
+  var intRemoved = false;
   if(this.myArray.length > 0){
     for(var i = 0; i < this.myArray.length; i++){
       if(this.myArray[i].title == title){
         this.myArray.splice([i],1);
-        intRemoved++;
-
-//        console.log(title + " removed from library.");
-//        return true;
+        intRemoved = true;
       }
-      // else {
-      //   console.log("Error: " + title + " not found in library.");
-      //   return false;
-      // }
       if(intRemoved == true){
-
+        console.log(title + " removed from the library.");
+        return true;
       } else {
-
+        console.log("Error: " + title + " not found in library.");
+        return false;
       }
-
-
-
     }
   } else { //array was empty; no match possible.
     console.log("Error: " + title + " not found in library.");
     return false;
   }
+  //An alternate way to code this function, that defaults to "title not found" and returns false if the searched title wasn't located.
+  // var intRemoved = false;
+  // if(this.myArray.length > 0){
+  //   for(var i = 0; i < this.myArray.length; i++){
+  //     if(this.myArray[i].title == title){
+  //       this.myArray.splice([i],1);
+  //       console.log(title + " removed from the library.");
+  //       return true;
+  //     }
+  //   }
+  // }
+  // console.log("Error: " + title + " not found in library.");
+  // return false;
 }
 
 
@@ -120,14 +127,27 @@ myLibrary.prototype.removeBookByAuthor = function(authorName){
 //Purpose: Return a random book object from your books array.
 //Return: book object if you find a book, null if there are no books.
 myLibrary.prototype.getRandomBook = function(){
-
+  if(testLibrary.myArray.length > 0){
+    var myRandom = Math.floor(Math.random() * testLibrary.myArray.length);
+    return testLibrary.myArray[myRandom];
+  }else {
+    return null;
+  }
 }
 
 
 //Purpose: Return all books that completely or partially matches the string title passed into the function.
 //Return: array of book objects if you find books with matching titles, empty array if no books are found.
 myLibrary.prototype.getBookByTitle = function(title){
-
+  var searchArray = [];
+  for(var i = 0; i < this.myArray.length; i++){
+    var searchTitle = this.myArray[i].title;
+    var regexpTest = new RegExp(title);
+    if(regexpTest.test(searchTitle) == true){
+      searchArray.push(this.myArray[i]);
+    }
+  }
+  return searchArray;
 }
 
 
