@@ -19,32 +19,20 @@ var myNewBook6  = new newBook("Stephen King", "The Waste Lands", 721, new Date("
 var myNewBook7  = new newBook("Chuck Palahniuk", "Fight Club", 426, new Date("08/28/1996"), "", 0);
 var myNewBook8 = new newBook("Stephen King", "Wizard and Glass", 787, new Date("11/04/1997"), "The Dark Tower", 4);
 var myNewBook9 = new newBook("Stephen King", "The Drawing of the Three", 541, new Date("03/06/1987"), "The Dark Tower", 2);
-var myNewBook10  = new newBook("J.R.R Tolkein", "The Hobbit", 640, new Date("01/09/1951"), "", 0);
+var myNewBook10  = new newBook("J.R.R Tolkien", "The Hobbit", 640, new Date("01/09/1951"), "", 0);
 
 //Instance of my library object, using the myLibrary prototype.
-var testLibrary = new myLibrary();
+var DansLibrary = new myLibrary();
 
 myLibrary.prototype.myArray = [];
 
+//Create a bookshelf that contains all the books that exist.
 myLibrary.prototype.myBookShelf = [];
-testLibrary.myBookShelf = [myNewBook1, myNewBook2, myNewBook3, myNewBook4, myNewBook5, myNewBook6, myNewBook7, myNewBook8, myNewBook9, myNewBook10];
-//console.log(testLibrary.myBookShelf);
-
-// myLibrary.prototype.bookshelf = [];
-//
-//
-// //Purpose: add all books in the library to myArray
-// myLibrary.prototype.createBookshelf = function(){
-// debugger;
-//   //  this.bookshelf.push(myNewBook1);
-// var bookshelf=[];
-// for(int x = 0; x < ; x++)
-// {
-//   this.push(this.myNewBook+x)
-// }
+DansLibrary.myBookShelf = [myNewBook1, myNewBook2, myNewBook3, myNewBook4, myNewBook5, myNewBook6, myNewBook7, myNewBook8, myNewBook9, myNewBook10];
 
 //Purpose: Add a book object to your books array.
 //Return: boolean true if it is not already added, false if it is already added.
+//Call like:    DansLibrary.addBook(myNewBook1);
 myLibrary.prototype.addBook = function(myNewBook){
   if(this.myArray.length == 0){   //array is empty; add the book.
       this.myArray.push(myNewBook);
@@ -67,11 +55,11 @@ myLibrary.prototype.addBook = function(myNewBook){
     }
   }
 }
-// testLibrary.addBook(myNewBook1);
 
 
 //Purpose: Remove book from from the books array by its title.
 //Return: boolean true if the book(s) were removed, false if no books match.
+//Call like:    DansLibrary.removeBookByTitle("Shock Wave");
 myLibrary.prototype.removeBookByTitle = function(title){
   var intRemoved = false;
   if(this.myArray.length > 0){
@@ -92,30 +80,16 @@ myLibrary.prototype.removeBookByTitle = function(title){
     console.log("Error: " + title + " not found in library.");
     return false;
   }
-  //An alternate way to code this function, that defaults to "title not found" and returns false if the searched title wasn't located.
-  // var intRemoved = false;
-  // if(this.myArray.length > 0){
-  //   for(var i = 0; i < this.myArray.length; i++){
-  //     if(this.myArray[i].title == title){
-  //       this.myArray.splice([i],1);
-  //       console.log(title + " removed from the library.");
-  //       return true;
-  //     }
-  //   }
-  // }
-  // console.log("Error: " + title + " not found in library.");
-  // return false;
 }
-//testLibrary.removeBookByTitle("prey");
 
 
 //Purpose: Remove a specific book from your books array by the author name.
 //Return: boolean true if the book(s) were removed, false if no books match.
+//Call like:    DansLibrary.removeBookByAuthor("king");
 myLibrary.prototype.removeBookByAuthor = function(authorName){
   var intRemoved = 0;
   if(this.myArray.length > 0){
     for(var i = 0; i < this.myArray.length; i++){
-      console.log(this.myArray[i].title);
       if(this.myArray[i].author.toLowerCase() == authorName.toLowerCase()){
         this.myArray.splice([i],1);
         intRemoved++;
@@ -123,7 +97,6 @@ myLibrary.prototype.removeBookByAuthor = function(authorName){
       }
     }
   }
-
   if (intRemoved > 0){
     console.log(intRemoved + " books by " + authorName + " removed from library.");
     return true;
@@ -132,24 +105,24 @@ myLibrary.prototype.removeBookByAuthor = function(authorName){
     return false;
   }
 }
-//testLibrary.removeBookByAuthor("king")
 
 
 //Purpose: Return a random book object from your books array.
 //Return: book object if you find a book, null if there are no books.
+//Call like:    DansLibrary.getRandomBook();
 myLibrary.prototype.getRandomBook = function(){
-  if(testLibrary.myArray.length > 0){
-    var myRandom = Math.floor(Math.random() * testLibrary.myArray.length);
-    return testLibrary.myArray[myRandom];
+  if(this.myArray.length > 0){
+    var myRandom = Math.floor(Math.random() * this.myArray.length);
+    return this.myArray[myRandom];
   }else {
     return null;
   }
 }
-//testLibrary.getRandomBook();
 
 
 //Purpose: Return all books that completely or partially matches the string title passed into the function.
 //Return: array of book objects if you find books with matching titles, empty array if no books are found.
+//call like:    DansLibrary.getBookByTitle("the");
 myLibrary.prototype.getBookByTitle = function(title){
   var titleArray = [];
   for(var i = 0; i < this.myArray.length; i++){
@@ -161,11 +134,11 @@ myLibrary.prototype.getBookByTitle = function(title){
   }
   return titleArray;
 }
-//testLibrary.getBookByTitle("prey");
 
 
 //Purpose: Finds all books where the author’s name partially or completely matches the authorName argument passed to the function.
 //Return: array of books if you find books with matching authors, empty array if no books match.
+//Call like:    DansLibrary.getBooksByAuthor("sandford");
 myLibrary.prototype.getBooksByAuthor = function(authorName){
   var authorArray = [];
   for(var i = 0; i < this.myArray.length; i++){
@@ -176,30 +149,20 @@ myLibrary.prototype.getBooksByAuthor = function(authorName){
   }
   return authorArray;
 }
-//testLibrary.getBooksByAuthor("sandford");
 
 
 //Purpose: Takes multiple books, in the form of an array of book objects, and adds the objects to your books array.
 //Return: number - number of books successfully added, 0 if no books were added.
+// Call like:   DansLibrary.addBooks(DansLibrary.myBookShelf);
 myLibrary.prototype.addBooks = function(books){
-  for(var i = 0; i < books.length; i++){
-    this.myArray.push(books[i]);
-  }
-  if(this.myArray.length > 0){
-    console.log(this.myArray.length + " books added to library.");
-    return this.myArray.length;
-  } else {
-    console.log("Error: 0 books added to library. Please check your request and try again.");
-    return 0;
-  }
+  this.myArray = this.myArray.concat(books);
+  return this.myArray.length;
 }
 
-// testLibrary.addBooks([myNewBook1, myNewBook2, myNewBook3, myNewBook4, myNewBook5, myNewBook6, myNewBook7, myNewBook8, myNewBook9, myNewBook10, myNewBook11, myNewBook12, myNewBook13,
-// myNewBook14, myNewBook15, myNewBook16, myNewBook17, myNewBook18, myNewBook19, myNewBook20, myNewBook21, myNewBook21]);
-testLibrary.addBooks(this.myBookShelf);
 
 //Purpose: Find the distinct authors’ names from all books in your library.
 //Return: array of strings the names of all distinct authors, empty array if no books exist or if no authors exist.
+//Call like:    DansLibrary.getAuthors();
 myLibrary.prototype.getAuthors = function(){
   var authorsArray = [];
   var blnAuthorMatch = false;
@@ -225,13 +188,14 @@ myLibrary.prototype.getAuthors = function(){
 }
 
 
-//Purpose: Retrieves a random author name from your books collection.
+//Purpose: Retrieves a random author name from your books collection. Uses getAuthors function to retrieve the distint list of authors.
 //Return: string author name, null if no books exist.
+//Call like: DansLibrary.getRandomAuthorName();
 myLibrary.prototype.getRandomAuthorName = function(){
   var authorsArray1 = [];
   authorsArray1 = this.getAuthors();  //use the getAuthors function to get the names of all authors in the library.
 
-  if(testLibrary.myArray.length > 0){
+  if(DansLibrary.myArray.length > 0){
     var myRandom = Math.floor(Math.random() * authorsArray1.length);
     return authorsArray1[myRandom];
   }else {
@@ -242,7 +206,8 @@ myLibrary.prototype.getRandomAuthorName = function(){
 //Extra credit ******************************************************************************************************
 
 //Purpose: Retrieves a distinct list of the names of all series in the the library.
-//Return: array of strings the names of all distinct series, empty array if no books exist or if no series exist.
+//Return: array of strings - the names of all distinct series, empty array if no books exist or if no series exist.
+//Call like: DansLibrary.getSeries();
 myLibrary.prototype.getSeries = function(){
   var seriesArray = [];
   var blnSeriesMatch = false;
@@ -250,12 +215,8 @@ myLibrary.prototype.getSeries = function(){
     blnSeriesMatch = false;
     if(seriesArray.length > 0){
       for(var j = 0; j < seriesArray.length; j++){  //loop through all the series names that have already been added.
-        console.log(seriesArray[j]);
-        console.log(this.myArray[i].series);
-        console.log(seriesArray[j].toLowerCase() == this.myArray[i].series.toLowerCase());
         if(seriesArray[j].toLowerCase() == this.myArray[i].series.toLowerCase()){   //check if the series name would be a duplicate.
           blnSeriesMatch = true;  //a duplicate was found. Don't add this series.
-          console.log("blnSeriesMatch: " + blnSeriesMatch);
         }
       }
       if(blnSeriesMatch == false){  //don't add if series name is "" or was already added.
@@ -278,26 +239,22 @@ myLibrary.prototype.getSeries = function(){
 
 //Purpose: Retrieves all books in the series name passed into the function, in series order.
 //Return: array of book objects, empty array if series doesn't exist.
+//Call like:    DansLibrary.getSeriesInOrder("The Dark Tower");
 myLibrary.prototype.getSeriesInOrder = function(seriesName){
     var seriesArray = [];
-    // var orderArray = [];
 
-    if(testLibrary.myArray.length > 0){
+    if(DansLibrary.myArray.length > 0){
       for(var i = 0; i < this.myArray.length; i++){
         if(this.myArray[i].series == seriesName){
           seriesArray.push(this.myArray[i]);
-          // orderArray.push(this.myArray[i].seriesOrder);
         }
       }
       seriesArray.sort(function(a, b){
         return a.seriesOrder - b.seriesOrder;
       });
-      console.log(seriesArray);
     }
     for(var j = 0; j < seriesArray.length; j++){
       console.log(seriesArray[j].seriesOrder + ". " + seriesArray[j].title);
     }
     return seriesArray;
 }
-
-// testLibrary.getSeriesInOrder("The Dark Tower");
