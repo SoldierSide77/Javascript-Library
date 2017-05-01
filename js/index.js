@@ -1,4 +1,4 @@
- function newBook(author, title, numberOfPages, publishedDate, series, seriesOrder){   //Constructor function
+ function newBook(author, title, numberOfPages, publishedDate, series, seriesOrder){
   this.author = author;
   this.title = title;
   this.numberOfPages = numberOfPages;
@@ -27,8 +27,7 @@ var DansLibrary = new myLibrary();
 myLibrary.prototype.myArray = [];
 
 //Create a bookshelf that contains all the books that exist.
-myLibrary.prototype.myBookShelf = [];
-DansLibrary.myBookShelf = [myNewBook1, myNewBook2, myNewBook3, myNewBook4, myNewBook5, myNewBook6, myNewBook7, myNewBook8, myNewBook9, myNewBook10];
+myLibrary.prototype.myBookShelf = [myNewBook1, myNewBook2, myNewBook3, myNewBook4, myNewBook5, myNewBook6, myNewBook7, myNewBook8, myNewBook9, myNewBook10];
 
 //Purpose: Add a book object to your books array.
 //Return: boolean true if it is not already added, false if it is already added.
@@ -93,7 +92,7 @@ myLibrary.prototype.removeBookByAuthor = function(authorName){
       if(this.myArray[i].author.toLowerCase() == authorName.toLowerCase()){
         this.myArray.splice([i],1);
         intRemoved++;
-        i--;
+        i--;    //when removing books, array.length decreases. Decrease i to compensate.
       }
     }
   }
@@ -156,9 +155,9 @@ myLibrary.prototype.getBooksByAuthor = function(authorName){
 // Call like:   DansLibrary.addBooks(DansLibrary.myBookShelf);
 myLibrary.prototype.addBooks = function(books){
   var i = this.myArray.length;
-  this.myArray = this.myArray.concat(books);
+  this.myArray = this.myArray.concat(books);  //add array myBookshelf to this.myArray
   var j = this.myArray.length;
-  return j - i;
+  return j - i;   //return the number of books added.
 }
 
 
