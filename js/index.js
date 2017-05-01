@@ -155,8 +155,10 @@ myLibrary.prototype.getBooksByAuthor = function(authorName){
 //Return: number - number of books successfully added, 0 if no books were added.
 // Call like:   DansLibrary.addBooks(DansLibrary.myBookShelf);
 myLibrary.prototype.addBooks = function(books){
+  var i = this.myArray.length;
   this.myArray = this.myArray.concat(books);
-  return this.myArray.length;
+  var j = this.myArray.length;
+  return j - i;
 }
 
 
