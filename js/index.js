@@ -1,4 +1,42 @@
- function newBook(author, title, numberOfPages, publishedDate, series, seriesOrder){
+var myLibrary = function(){};
+
+myLibrary.prototype.init = function(){  //anything in init runs on page load
+  this.$jumbo=$(".jumbotron ul"); //global variable to refer to the <UL> element in the jumbotron.
+  this._bindEvents();
+};
+
+//Instance of my library object, using the myLibrary prototype.
+var DansLibrary = new myLibrary();
+
+myLibrary.prototype._bindEvents = function(){
+  //  $(.addBook).on("click", $.proxy(this._addBook, this));  //button removed
+  $("#addButton").on("click", $.proxy(this._addMultiple, this));  //the lines below need to match the id's of the buttons, like this one does.
+  $("#btn-removeBookByTitle").on("click", $.proxy(this._removeBookByTitle, this));
+  $("#btn-removeBookByAuthor").on("click", $.proxy(this._removeBookByAuthor, this));
+  $("#btn-getRandomBook").on("click", $.proxy(this._getRandomBook, this));
+  $("#btn-getBookByTitle").on("click", $.proxy(this._getBookByTitle, this));
+  $("#btn-getBooksByAuthor").on("click", $.proxy(this._getBooksByAuthor, this));
+  $("#btn-addBooks").on("click", $.proxy(this._addBooks, this));
+  $("#btn-getAuthors").on("click", $.proxy(this._getAuthors, this));
+  $("#btn-getRandomAuthorName").on("click", $.proxy(this._getRandomAuthorName, this));
+  $("#btn-getSeries").on("click", $.proxy(this._getSeries, this));
+  $("#btn-getSeriesInOrder").on("click", $.proxy(this._getSeriesInOrder, this));
+};
+
+
+//Add multiple books. Inject dynamic inputs.
+myLibrary.prototype._addMultiple = function(){
+  intBooks++;
+  var bookList=$("#addMulti>ul");  //assign bookList to refer to the list of books in the Add New Book(s) section.
+  //add inputs for each additional book they want to add.
+  bookList.append('<li>'+
+  '<label for="title" class="lMargin2">Title:</label><input type="text" id="titleIn" class="form-control long-input">'+
+  '<label for="author">Author:</label><input type="text" id="authorIn" class="form-control">'+
+  '<label for="pages">Number of Pages:</label><input type="text" id="pagesIn" class="form-control short-input">'+
+  '<label for="Date">Published Date:</label><input type="text" id="dateIn" class="form-control short-md-input"></li>');
+}
+
+function newBook(author, title, numberOfPages, publishedDate, series, seriesOrder){
   this.author = author;
   this.title = title;
   this.numberOfPages = numberOfPages;
@@ -6,8 +44,6 @@
   this.series = series;
   this.seriesOrder = seriesOrder;
 }
-
-var myLibrary = function(){};
 
 //my book objects
 var myNewBook1 = new newBook("John Sandford", "Shock Wave", 427, new Date("01/26/2009"), "Virgil Flowers", 3);
@@ -20,9 +56,6 @@ var myNewBook7 = new newBook("Chuck Palahniuk", "Fight Club", 426, new Date("08/
 var myNewBook8 = new newBook("Stephen King", "Wizard and Glass", 787, new Date("11/04/1997"), "The Dark Tower", 4);
 var myNewBook9 = new newBook("Stephen King", "The Drawing of the Three", 541, new Date("03/06/1987"), "The Dark Tower", 2);
 var myNewBook10 = new newBook("J.R.R Tolkien", "The Hobbit", 640, new Date("01/09/1951"), "", 0);
-
-//Instance of my library object, using the myLibrary prototype.
-var DansLibrary = new myLibrary();
 
 //Create a global counter to keep track of how many times the user has clicked addButton.
 var intBooks = 0;
@@ -58,38 +91,6 @@ myLibrary.prototype._addBook = function(myNewBook){
       return true;
     }
   }
-}
-
-
-//Get the values of the book the user wants to add and verify the data is valid.
-myLibrary.prototype._validateBook = function(){
-  var inTitle=$("#titleIn").val();
-  var inAuthor=$("#authorIn").val();
-  var inPages=$("#pagesIn").val();
-  var inDate=$("#dateIn").val();
-  var inSeries=$("#seriesIn").val();
-  var inOrder=$("#orderIn").val();
-
-  for(var i = 0; i < intBooks; i++){
-
-
-  }
-
-
-  if(inTitle != "" && !isNan(inTitle)){
-
-  }
-
-
-
-
-}
-
-
-//Add multiple books. Inject dynamic inputs.
-myLibrary.prototype._addMultiple = function(){
-  intBooks++;
-
 }
 
 
@@ -179,14 +180,37 @@ myLibrary.prototype._getBooksByAuthor = function(authorName){
 }
 
 
+
 //Purpose: Takes multiple books, in the form of an array of book objects, and adds the objects to your books array.
 //Return: number - number of books successfully added, 0 if no books were added.
 // Call like:   DansLibrary.addBooks(DansLibrary.myBookShelf);
 myLibrary.prototype._addBooks = function(books){
+  var bookToAdd = this._getBooksToAdd();
+
+  for(var i = 0; i<bookToAdd.length; i++){
+    this._addbook()
+  }
+
+
   var i = this.myArray.length;
   this.myArray = this.myArray.concat(books);  //add array myBookshelf to this.myArray
   var j = this.myArray.length;
   return j - i;   //return the number of books added.
+}
+
+
+
+//Get the values of the book the user wants to add and verify the data is valid.
+myLibrary.prototype._getBooksToAdd = function(){
+  var booksToAdd = [];
+
+  $.each($("#addMultiList>li>input"), function(Index, val){
+      var bookProperty =$(this).val();
+      if(bookProperty != NaN && bookProperty ==""){
+        booksToAdd.push(bookProperty);
+      }
+  });
+  return booksToAdd;
 }
 
 
@@ -289,35 +313,6 @@ myLibrary.prototype._getSeriesInOrder = function(seriesName){
     return seriesArray;
 }
 
-//***start of linking buttons to the functions above****************************************
-myLibrary.prototype.init = function(){  //anything in init runs on page load
-  this.$jumbo = $(".jumbotron ul");
 
-  // this.$addBook = $("button.btn-addBook");
-  // this.$removeBookByTitle = $("btn-removeBookByTitle");
-  // this.$removeBookByAuthor = $("btn-removeBookByAuthor");
-  // this.$getRandomBook = $("btn-getRandomBook");
-  // this.$getBookByTitle = $("btn-getBookByTitle");
-  // this.$getBooksByAuthor = $("btn-getBooksByAuthor");
-  // this.$addBooks = $("btn-addBooks");
-  // this.$getAuthors = $("btn-getAuthors");
-  // this.$getRandomAuthorName = $("btn-getRandomAuthorName");
-  // this.$getSeries = $("btn-getSeries");
-  // this.$getSeriesInOrder = $("btn-getSeriesInOrder");
-  this._bindEvents();
-};
-
-myLibrary.prototype._bindEvents = function(){
-  //  $(.addBook).on("click", $.proxy(this._addBook, this));
-   $(.removeBookByTitle).on("click", $.proxy(this._removeBookByTitle, this));
-   $(.removeBookByAuthor).on("click", $.proxy(this._removeBookByAuthor, this));
-   $(.getRandomBook).on("click", $.proxy(this._getRandomBook, this));
-   $(.getBookByTitle).on("click", $.proxy(this._getBookByTitle, this));
-   $(.getBooksByAuthor).on("click", $.proxy(this._getBooksByAuthor, this));
-   $(.addBooks).on("click", $.proxy(this._addBooks, this));
-   $(.getAuthors).on("click", $.proxy(this._getAuthors, this));
-   $(.getRandomAuthorName).on("click", $.proxy(this._getRandomAuthorName, this));
-   $(.getSeries).on("click", $.proxy(this._getSeries, this));
-   $(.getSeriesInOrder).on("click", $.proxy(this._getSeriesInOrder, this));
-   $(#addButton).on("click", $.proxy(this._addMultiple, this));
-};
+//Run the init function on load;
+DansLibrary.init();

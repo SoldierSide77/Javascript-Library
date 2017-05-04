@@ -37,35 +37,35 @@
 
     <div></div>
     <div class="form-group container-fluid">
-      <h4 id=addNew>Add New Book(s)</h4>
-      <h4>click the plus button at the left to add multiple books</h4>
-      <div>
-        <input type="image" id="addButton" class="addButton" src="images\add-button-hi.png">
-        <label for="title">Title:</label>
-        <input type="text" id="titleIn" class="form-control long-input">
-        <label for="author">Author:</label>
-        <input type="text" id="authorIn" class="form-control">
-        <label for="pages">Number of Pages:</label>
-        <input type="text" id="pagesIn" class="form-control short-input">
-        <label for="Date">Published Date:</label>
-        <input type="text" id="dateIn" class="form-control short-md-input">
-        <label for="series">Series Name:</label>
-        <input type="text" id="seriesIn" class="form-control md-long-input">
-        <label for="order">Series Order:</label>
-        <input type="text" id="orderIn" class="form-control short-input">
+      <h4 id=addNew>Add New Book(s)*</h4>
+      <h4>*click the plus button at the left to add multiple books at once</h4>
+      <div id="addMulti">
+        <ul class="addMultiList">
+          <li>
+            <input type="image" id="addButton" class="addButton" src="images\add-button-hi.png">
+            <label for="title" class="lMargin1">Title:</label>
+            <input type="text" id="titleIn" class="form-control long-input">
+            <label for="author">Author:</label>
+            <input type="text" id="authorIn" class="form-control">
+            <label for="pages">Number of Pages:</label>
+            <input type="text" id="pagesIn" class="form-control short-input">
+            <label for="Date">Published Date:</label>
+            <input type="text" id="dateIn" class="form-control short-md-input">
+          </li>
+        </ul>
       </div>
       <div class="submitBtn">
-        <button type="button" class="btn btn-lg btn-primary btn-addBooks">Add Books</button>
+        <button type="button" class="btn btn-lg btn-primary" id="btn-addBooks">Add Books</button>
       </div>
     </div>
 
 
     <div>
       <div class="buttons">
-        <button type="button" class="btn btn-lg btn-primary btn-getRandomBook">Get Random Book</button>
-        <button type="button" class="btn btn-lg btn-primary btn-getRandomAuthorName">Get Random Author Name</button>
-        <button type="button" class="btn btn-lg btn-primary btn-getAuthors">List All Authors</button>
-        <button type="button" class="btn btn-lg btn-primary btn-getSeries">List All Series</button>
+        <button type="button" class="btn btn-lg btn-primary" id="btn-getRandomAuthorName">Get Random Author Name</button>
+        <button type="button" class="btn btn-lg btn-primary" id="btn-getRandomBook">Get Random Book</button>
+        <button type="button" class="btn btn-lg btn-primary" id="btn-getAuthors">List All Authors</button>
+        <button type="button" class="btn btn-lg btn-primary" id="btn-getSeries">List All Series</button>
       </div>
 
       <div class="container">
@@ -73,25 +73,16 @@
       </div>
 
       <div class="buttons">
-        <button type="button" class="btn btn-lg btn-primary btn-getBookByTitle">Get Book By Title</button>
-        <button type="button" class="btn btn-lg btn-primary btn-getBooksByAuthor">List All Books By Author</button>
-        <button type="button" class="btn btn-lg btn-primary btn-getSeriesInOrder">List Series in Order</button>
-        <button type="button" class="btn btn-lg btn-primary btn-removeBookByTitle">Remove Book By Title</button>
-        <button type="button" class="btn btn-lg btn-primary btn-removeBookByAuthor">Remove Book By Author</button>
+        <button type="button" class="btn btn-lg btn-primary" id="btn-getBookByTitle">Get Book By Title</button>
+        <button type="button" class="btn btn-lg btn-primary" id="btn-getBooksByAuthor">List All Books By Author</button>
+        <button type="button" class="btn btn-lg btn-primary" id="btn-getSeriesInOrder">List Series in Order</button>
+        <button type="button" class="btn btn-lg btn-primary" id="btn-removeBookByTitle">Remove Book By Title</button>
+        <button type="button" class="btn btn-lg btn-primary" id="btn-removeBookByAuthor">Remove Book By Author</button>
       </div>
     </div>
 
-    <!-- <div class="container">
-      <div class="row">
-          <div class="col-md-6">
-
-          </div>
-
-          <div class="col-md-6"><p>Box 2</p></div>
-          <div class="clearfix visible-md-block"></div>
-      </div>
-    </div> -->
-    <script type="text/javascript" src="js\index.js"></script>
     <script src="js\jquery.min.js"></script>
+    <script type="text/javascript" src="js\index.js"></script>
+
   </body>
 </html>
