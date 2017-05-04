@@ -3,9 +3,95 @@
   <head>
     <meta charset="utf-8">
     <title>Javascript Library</title>
+    <link rel="stylesheet" href="css\Normalize.css"</link>
+    <link rel="stylesheet" href="css\bootstrap.min.css"</link>
+    <link rel="stylesheet" href="css\bootstrap-theme.min.css"</link>
+    <link rel="stylesheet" href="css\index.css"</link>
   </head>
   <body>
-    <div>Dan's JavaScript Library</div>
+    <h1>Dan's JavaScript Library</h1>
+    <hr>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-5">
+          <h2>Library</h2>
+        </div>
+        <div class="col-md-4">
+          <h2>Results</h2>
+        </div>
+        <div class="col-md-1"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-5 jumbotron">
+          <ul></ul>
+        </div>
+        <div class="col-md-4 well well-lg">
+          <ul></ul>
+        </div>
+        <div class="col-md-1"></div>
+      </div>
+    </div>
+
+    <div></div>
+    <div class="form-group container-fluid">
+      <h4 id=addNew>Add New Book(s)</h4>
+      <h4>click the plus button at the left to add multiple books</h4>
+      <div>
+        <input type="image" id="addButton" class="addButton" src="images\add-button-hi.png">
+        <label for="title">Title:</label>
+        <input type="text" id="titleIn" class="form-control long-input">
+        <label for="author">Author:</label>
+        <input type="text" id="authorIn" class="form-control">
+        <label for="pages">Number of Pages:</label>
+        <input type="text" id="pagesIn" class="form-control short-input">
+        <label for="Date">Published Date:</label>
+        <input type="text" id="dateIn" class="form-control short-md-input">
+        <label for="series">Series Name:</label>
+        <input type="text" id="seriesIn" class="form-control md-long-input">
+        <label for="order">Series Order:</label>
+        <input type="text" id="orderIn" class="form-control short-input">
+      </div>
+      <div class="submitBtn">
+        <button type="button" class="btn btn-lg btn-primary btn-addBooks">Add Books</button>
+      </div>
+    </div>
+
+
+    <div>
+      <div class="buttons">
+        <button type="button" class="btn btn-lg btn-primary btn-getRandomBook">Get Random Book</button>
+        <button type="button" class="btn btn-lg btn-primary btn-getRandomAuthorName">Get Random Author Name</button>
+        <button type="button" class="btn btn-lg btn-primary btn-getAuthors">List All Authors</button>
+        <button type="button" class="btn btn-lg btn-primary btn-getSeries">List All Series</button>
+      </div>
+
+      <div class="container">
+        <input type="text" class="input-lower form-control long-input" id="lowerInput">
+      </div>
+
+      <div class="buttons">
+        <button type="button" class="btn btn-lg btn-primary btn-getBookByTitle">Get Book By Title</button>
+        <button type="button" class="btn btn-lg btn-primary btn-getBooksByAuthor">List All Books By Author</button>
+        <button type="button" class="btn btn-lg btn-primary btn-getSeriesInOrder">List Series in Order</button>
+        <button type="button" class="btn btn-lg btn-primary btn-removeBookByTitle">Remove Book By Title</button>
+        <button type="button" class="btn btn-lg btn-primary btn-removeBookByAuthor">Remove Book By Author</button>
+      </div>
+    </div>
+
+    <!-- <div class="container">
+      <div class="row">
+          <div class="col-md-6">
+
+          </div>
+
+          <div class="col-md-6"><p>Box 2</p></div>
+          <div class="clearfix visible-md-block"></div>
+      </div>
+    </div> -->
     <script type="text/javascript" src="js\index.js"></script>
+    <script src="js\jquery.min.js"></script>
   </body>
 </html>

@@ -1,0 +1,121 @@
+body{
+  background-color: cornflowerblue;
+  padding: 15px;
+  text-align: center;
+}
+
+.header {
+
+}
+
+.buttons {
+  margin-bottom: 10px;
+}
+
+
+.form-group{
+  background-color: lightsteelblue;
+  padding: 10px;
+  text-align: center;
+}
+
+.form-control{
+  display: inline;
+  width: 200px;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.short-input{
+  width: 60px;
+}
+
+.short-md-input{
+  width: 100px;
+}
+
+.md-long-input{
+  width: 250px;
+}
+
+.long-input{
+  width: 300px;
+}
+
+#addNew{
+  font-weight: bold;
+  text-align: center;
+}
+
+.submitBtn{
+  text-align: center;
+  margin-top:10px;
+}
+
+.jumbotron{
+  text-align: center;
+  background-color: cornsilk;
+  height: 200px;
+}
+
+.well{
+  text-align: center;
+  background-color: mintcream;
+  height: 200px;
+}
+
+h2, h1{
+    font-weight: bold;
+}
+
+.input-lower{
+  text-align: center;
+  margin: 10px;
+}
+
+.btn-removeBookByTitle{
+
+}
+
+.btn-removeBookByAuthor{
+
+}
+
+.btn-getRandomBook{
+
+}
+
+.btn-getBookByTitle{
+
+}
+
+.btn-getBooksByAuthor{
+
+}
+
+.btn-addBooks{
+
+}
+
+.btn-getAuthors{
+
+}
+
+.btn-getRandomAuthorName{
+
+}
+
+.btn-getSeries{
+
+}
+
+.btn-getSeriesInOrder{
+
+}
+
+.addButton{
+  vertical-align: bottom;
+  margin-right: 5px;
+  height: 32px;
+  width: 32px;
+}

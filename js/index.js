@@ -11,18 +11,21 @@ var myLibrary = function(){};
 
 //my book objects
 var myNewBook1 = new newBook("John Sandford", "Shock Wave", 427, new Date("01/26/2009"), "Virgil Flowers", 3);
-var myNewBook2  = new newBook("William Golding", "Lord of the Flies", 443, new Date("10/04/1959"), "", 0);
+var myNewBook2 = new newBook("William Golding", "Lord of the Flies", 443, new Date("10/04/1959"), "", 0);
 var myNewBook3 = new newBook("John Sandford", "Heat Lightning", 361, new Date("10/02/2007"), "Virgil Flowers", 1);
 var myNewBook4 = new newBook("John Sandford", "Bad Blood", 396, new Date("12/16/2008"), "Virgil Flowers", 2);
 var myNewBook5 = new newBook("Stephen King", "The Gunslinger", 601, new Date("07/24/1983"), "The Dark Tower", 1);
-var myNewBook6  = new newBook("Stephen King", "The Waste Lands", 721, new Date("03/04/1992"), "The Dark Tower", 3);
-var myNewBook7  = new newBook("Chuck Palahniuk", "Fight Club", 426, new Date("08/28/1996"), "", 0);
+var myNewBook6 = new newBook("Stephen King", "The Waste Lands", 721, new Date("03/04/1992"), "The Dark Tower", 3);
+var myNewBook7 = new newBook("Chuck Palahniuk", "Fight Club", 426, new Date("08/28/1996"), "", 0);
 var myNewBook8 = new newBook("Stephen King", "Wizard and Glass", 787, new Date("11/04/1997"), "The Dark Tower", 4);
 var myNewBook9 = new newBook("Stephen King", "The Drawing of the Three", 541, new Date("03/06/1987"), "The Dark Tower", 2);
-var myNewBook10  = new newBook("J.R.R Tolkien", "The Hobbit", 640, new Date("01/09/1951"), "", 0);
+var myNewBook10 = new newBook("J.R.R Tolkien", "The Hobbit", 640, new Date("01/09/1951"), "", 0);
 
 //Instance of my library object, using the myLibrary prototype.
 var DansLibrary = new myLibrary();
+
+//Create a global counter to keep track of how many times the user has clicked addButton.
+var intBooks = 0;
 
 myLibrary.prototype.myArray = [];
 
@@ -32,7 +35,9 @@ myLibrary.prototype.myBookShelf = [myNewBook1, myNewBook2, myNewBook3, myNewBook
 //Purpose: Add a book object to your books array.
 //Return: boolean true if it is not already added, false if it is already added.
 //Call like:    DansLibrary.addBook(myNewBook1);
-myLibrary.prototype.addBook = function(myNewBook){
+myLibrary.prototype._addBook = function(myNewBook){
+  var display=$(".jumbotron ul>li");
+
   if(this.myArray.length == 0){   //array is empty; add the book.
       this.myArray.push(myNewBook);
       console.log(myNewBook.title + " has been added to the library.");
@@ -56,36 +61,60 @@ myLibrary.prototype.addBook = function(myNewBook){
 }
 
 
+//Get the values of the book the user wants to add and verify the data is valid.
+myLibrary.prototype._validateBook = function(){
+  var inTitle=$("#titleIn").val();
+  var inAuthor=$("#authorIn").val();
+  var inPages=$("#pagesIn").val();
+  var inDate=$("#dateIn").val();
+  var inSeries=$("#seriesIn").val();
+  var inOrder=$("#orderIn").val();
+
+  for(var i = 0; i < intBooks; i++){
+
+
+  }
+
+
+  if(inTitle != "" && !isNan(inTitle)){
+
+  }
+
+
+
+
+}
+
+
+//Add multiple books. Inject dynamic inputs.
+myLibrary.prototype._addMultiple = function(){
+  intBooks++;
+
+}
+
+
 //Purpose: Remove book from from the books array by its title.
 //Return: boolean true if the book(s) were removed, false if no books match.
 //Call like:    DansLibrary.removeBookByTitle("Shock Wave");
-myLibrary.prototype.removeBookByTitle = function(title){
-  var intRemoved = false;
-  if(this.myArray.length > 0){
-    for(var i = 0; i < this.myArray.length; i++){
-      if(this.myArray[i].title.toLowerCase() == title.toLowerCase()){
-        this.myArray.splice([i],1);
-        intRemoved = true;
-      }
-      if(intRemoved == true){
-        console.log(title + " removed from the library.");
-        return true;
-      } else {
-        console.log("Error: " + title + " not found in library.");
-        return false;
-      }
+myLibrary.prototype._removeBookByTitle = function(title){
+  var display=$(".jumbotron ul>li");  //assign 'display' to refer to the list of titles in the jumbotron.
+  var title=$("#lowerInput").val();
+  // var intRemoved = false;
+
+  for(var i = 0; i < this.myArray.length; i++){
+    if(this.myArray[i].title.toLowerCase() == title.toLowerCase()){
+      display[i].remove();  //remove the passed title from the jumbotron.
+      this.myArray.splice([i],1); //remove the passed title from my library object.
     }
-  } else { //array was empty; no match possible.
-    console.log("Error: " + title + " not found in library.");
-    return false;
   }
+  this.myArray; //return localStorage later - change this to the name of your localstorage object.
 }
 
 
 //Purpose: Remove a specific book from your books array by the author name.
 //Return: boolean true if the book(s) were removed, false if no books match.
 //Call like:    DansLibrary.removeBookByAuthor("king");
-myLibrary.prototype.removeBookByAuthor = function(authorName){
+myLibrary.prototype._removeBookByAuthor = function(authorName){
   var intRemoved = 0;
   if(this.myArray.length > 0){
     for(var i = 0; i < this.myArray.length; i++){
@@ -109,7 +138,7 @@ myLibrary.prototype.removeBookByAuthor = function(authorName){
 //Purpose: Return a random book object from your books array.
 //Return: book object if you find a book, null if there are no books.
 //Call like:    DansLibrary.getRandomBook();
-myLibrary.prototype.getRandomBook = function(){
+myLibrary.prototype._getRandomBook = function(){
   if(this.myArray.length > 0){
     var myRandom = Math.floor(Math.random() * this.myArray.length);
     return this.myArray[myRandom];
@@ -122,7 +151,7 @@ myLibrary.prototype.getRandomBook = function(){
 //Purpose: Return all books that completely or partially matches the string title passed into the function.
 //Return: array of book objects if you find books with matching titles, empty array if no books are found.
 //call like:    DansLibrary.getBookByTitle("the");
-myLibrary.prototype.getBookByTitle = function(title){
+myLibrary.prototype._getBookByTitle = function(title){
   var titleArray = [];
   for(var i = 0; i < this.myArray.length; i++){
     var searchTitle = this.myArray[i].title;
@@ -138,7 +167,7 @@ myLibrary.prototype.getBookByTitle = function(title){
 //Purpose: Finds all books where the author’s name partially or completely matches the authorName argument passed to the function.
 //Return: array of books if you find books with matching authors, empty array if no books match.
 //Call like:    DansLibrary.getBooksByAuthor("sandford");
-myLibrary.prototype.getBooksByAuthor = function(authorName){
+myLibrary.prototype._getBooksByAuthor = function(authorName){
   var authorArray = [];
   for(var i = 0; i < this.myArray.length; i++){
     var regExpAuthor = new RegExp(authorName.toLowerCase());
@@ -153,7 +182,7 @@ myLibrary.prototype.getBooksByAuthor = function(authorName){
 //Purpose: Takes multiple books, in the form of an array of book objects, and adds the objects to your books array.
 //Return: number - number of books successfully added, 0 if no books were added.
 // Call like:   DansLibrary.addBooks(DansLibrary.myBookShelf);
-myLibrary.prototype.addBooks = function(books){
+myLibrary.prototype._addBooks = function(books){
   var i = this.myArray.length;
   this.myArray = this.myArray.concat(books);  //add array myBookshelf to this.myArray
   var j = this.myArray.length;
@@ -164,7 +193,7 @@ myLibrary.prototype.addBooks = function(books){
 //Purpose: Find the distinct authors’ names from all books in your library.
 //Return: array of strings the names of all distinct authors, empty array if no books exist or if no authors exist.
 //Call like:    DansLibrary.getAuthors();
-myLibrary.prototype.getAuthors = function(){
+myLibrary.prototype._getAuthors = function(){
   var authorsArray = [];
   var blnAuthorMatch = false;
   for(var i = 0; i < this.myArray.length; i++){   //loop through each book in the library to get its author.
@@ -192,7 +221,7 @@ myLibrary.prototype.getAuthors = function(){
 //Purpose: Retrieves a random author name from your books collection. Uses getAuthors function to retrieve the distint list of authors.
 //Return: string author name, null if no books exist.
 //Call like: DansLibrary.getRandomAuthorName();
-myLibrary.prototype.getRandomAuthorName = function(){
+myLibrary.prototype._getRandomAuthorName = function(){
   var authorsArray1 = [];
   authorsArray1 = this.getAuthors();  //use the getAuthors function to get the names of all authors in the library.
 
@@ -209,7 +238,7 @@ myLibrary.prototype.getRandomAuthorName = function(){
 //Purpose: Retrieves a distinct list of the names of all series in the the library.
 //Return: array of strings - the names of all distinct series, empty array if no books exist or if no series exist.
 //Call like: DansLibrary.getSeries();
-myLibrary.prototype.getSeries = function(){
+myLibrary.prototype._getSeries = function(){
   var seriesArray = [];
   var blnSeriesMatch = false;
   for(var i = 0; i < this.myArray.length; i++){   //loop through each book in the library to get its series.
@@ -241,7 +270,7 @@ myLibrary.prototype.getSeries = function(){
 //Purpose: Retrieves all books in the series name passed into the function, in series order.
 //Return: array of book objects, empty array if series doesn't exist.
 //Call like:    DansLibrary.getSeriesInOrder("The Dark Tower");
-myLibrary.prototype.getSeriesInOrder = function(seriesName){
+myLibrary.prototype._getSeriesInOrder = function(seriesName){
     var seriesArray = [];
 
     if(DansLibrary.myArray.length > 0){
@@ -259,3 +288,36 @@ myLibrary.prototype.getSeriesInOrder = function(seriesName){
     }
     return seriesArray;
 }
+
+//***start of linking buttons to the functions above****************************************
+myLibrary.prototype.init = function(){  //anything in init runs on page load
+  this.$jumbo = $(".jumbotron ul");
+
+  // this.$addBook = $("button.btn-addBook");
+  // this.$removeBookByTitle = $("btn-removeBookByTitle");
+  // this.$removeBookByAuthor = $("btn-removeBookByAuthor");
+  // this.$getRandomBook = $("btn-getRandomBook");
+  // this.$getBookByTitle = $("btn-getBookByTitle");
+  // this.$getBooksByAuthor = $("btn-getBooksByAuthor");
+  // this.$addBooks = $("btn-addBooks");
+  // this.$getAuthors = $("btn-getAuthors");
+  // this.$getRandomAuthorName = $("btn-getRandomAuthorName");
+  // this.$getSeries = $("btn-getSeries");
+  // this.$getSeriesInOrder = $("btn-getSeriesInOrder");
+  this._bindEvents();
+};
+
+myLibrary.prototype._bindEvents = function(){
+  //  $(.addBook).on("click", $.proxy(this._addBook, this));
+   $(.removeBookByTitle).on("click", $.proxy(this._removeBookByTitle, this));
+   $(.removeBookByAuthor).on("click", $.proxy(this._removeBookByAuthor, this));
+   $(.getRandomBook).on("click", $.proxy(this._getRandomBook, this));
+   $(.getBookByTitle).on("click", $.proxy(this._getBookByTitle, this));
+   $(.getBooksByAuthor).on("click", $.proxy(this._getBooksByAuthor, this));
+   $(.addBooks).on("click", $.proxy(this._addBooks, this));
+   $(.getAuthors).on("click", $.proxy(this._getAuthors, this));
+   $(.getRandomAuthorName).on("click", $.proxy(this._getRandomAuthorName, this));
+   $(.getSeries).on("click", $.proxy(this._getSeries, this));
+   $(.getSeriesInOrder).on("click", $.proxy(this._getSeriesInOrder, this));
+   $(#addButton).on("click", $.proxy(this._addMultiple, this));
+};
