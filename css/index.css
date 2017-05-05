@@ -13,25 +13,38 @@ body{
   margin-left: 20px;
 }
 
-.lMargin1{
-  margin-left: 10px;
-}
-
-.lMargin2{
-  margin-left: 30px;
-}
-
 .form-group{
   background-color: lightsteelblue;
   padding: 10px;
-  text-align: center;
+  /*text-align: center;*/
 }
 
 .form-control{
   display: inline;
   width: 200px;
-  margin-right: 10px;
-  margin-top: 10px;
+  /*margin-right: 10px;
+  margin-top: 10px;*/
+}
+
+.addButton{
+  vertical-align: bottom;
+  height: 32px;
+  width: 32px;
+  margin-left: 10px;
+  margin-right: -40px;
+  /*margin-right :10px;*/
+}
+
+.lMargin1{
+  margin-left: -95px;
+}
+
+.lMargin2{
+  margin-right: 5px;
+}
+
+.addMultiList{
+  list-style: none;
 }
 
 .short-input{
@@ -121,13 +134,6 @@ h2, h1{
 
 }
 
-.addButton{
-  vertical-align: bottom;
-  /*margin-right: 5px;*/
-  height: 32px;
-  width: 32px;
-}
-
-.addMultiList{
-  list-style: none;
+hr{
+  padding: 0px;
 }

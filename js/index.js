@@ -3,6 +3,7 @@ var myLibrary = function(){};
 myLibrary.prototype.init = function(){  //anything in init runs on page load
   this.$jumbo=$(".jumbotron ul"); //global variable to refer to the <UL> element in the jumbotron.
   this._bindEvents();
+  this._addMultiple();
 };
 
 //Instance of my library object, using the myLibrary prototype.
@@ -28,12 +29,25 @@ myLibrary.prototype._bindEvents = function(){
 myLibrary.prototype._addMultiple = function(){
   intBooks++;
   var bookList=$("#addMulti>ul");  //assign bookList to refer to the list of books in the Add New Book(s) section.
-  //add inputs for each additional book they want to add.
-  bookList.append('<li>'+
-  '<label for="title" class="lMargin2">Title:</label><input type="text" id="titleIn" class="form-control long-input">'+
-  '<label for="author">Author:</label><input type="text" id="authorIn" class="form-control">'+
-  '<label for="pages">Number of Pages:</label><input type="text" id="pagesIn" class="form-control short-input">'+
-  '<label for="Date">Published Date:</label><input type="text" id="dateIn" class="form-control short-md-input"></li>');
+  var appendText1 = '<li>'+
+      '<label for="title" class="lMargin1 lMargin2">Title:</label>'+
+      '<input type="text" id="titleIn" class="form-control long-input">'+
+      '<label for="author" class="lMargin2">Author:</label>'+
+      '<input type="text" id="authorIn" class="form-control">'+
+      '<label for="pages class="lMargin2">Number of Pages:</label>'+
+      '<input type="text" id="pagesIn" class="form-control short-input">'+
+      '<label for="Date class="lMargin2">Published Date:</label>'+
+      '<input type="text" id="dateIn" class="form-control short-md-input">'
+  ;
+
+  if(intBooks ==1){ //when on the first row, add the plus button.
+    appendText1 +='<input type="image" id="addButton" class="addButton" src="images\\add-button-hi.png">';
+  }
+  appendText1 += '</li> <hr>';
+
+  bookList.append(appendText1);
+  this._bindEvents();
+
 }
 
 function newBook(author, title, numberOfPages, publishedDate, series, seriesOrder){
@@ -65,32 +79,49 @@ myLibrary.prototype.myArray = [];
 //Create a bookshelf that contains all the books that exist.
 myLibrary.prototype.myBookShelf = [myNewBook1, myNewBook2, myNewBook3, myNewBook4, myNewBook5, myNewBook6, myNewBook7, myNewBook8, myNewBook9, myNewBook10];
 
+
+
 //Purpose: Add a book object to your books array.
 //Return: boolean true if it is not already added, false if it is already added.
 //Call like:    DansLibrary.addBook(myNewBook1);
 myLibrary.prototype._addBook = function(myNewBook){
-  var display=$(".jumbotron ul>li");
+  var booksArray = myNewBook;
 
-  if(this.myArray.length == 0){   //array is empty; add the book.
-      this.myArray.push(myNewBook);
-      console.log(myNewBook.title + " has been added to the library.");
-      return true;
-  } else {
-    var blnMatch = false;
-    for(var i = 0; i < this.myArray.length; i++){
-      if(this.myArray[i].title == myNewBook.title){
-        blnMatch = true;
+  if(booksArray.length=4) {
+    var bookToAdd = new newBook(booksArray[0], booksArray[1], booksArray[2], booksArray[3]);
+      for(var i = 0; i < this.myArray.length; i++){
+        if(this.myArray[i].title == bookToAdd.title){
+            alert("Book aleady exists.")
+            return false;
+        }
       }
-    }
-    if(blnMatch == true){   //the title has already been added. Abort.
-      console.log("Error: " + myNewBook.title + " already exists in the library. Title not added.");
-      return false;
-    } else {  //title has not yet been added; add the book.
-      this.myArray.push(myNewBook);
-      console.log(myNewBook.title + " has been added to the library.");
-      return true;
-    }
+      this.myArray.push(bookToAdd);
+      // return this.
   }
+
+
+  // var display=$(".jumbotron ul>li");
+  //
+  // if(this.myArray.length == 0){   //array is empty; add the book.
+  //     this.myArray.push(myNewBook);
+  //     console.log(myNewBook.title + " has been added to the library.");
+  //     return true;
+  // } else {
+  //   var blnMatch = false;
+  //   for(var i = 0; i < this.myArray.length; i++){
+  //     if(this.myArray[i].title == myNewBook.title){
+  //       blnMatch = true;
+  //     }
+  //   }
+  //   if(blnMatch == true){   //the title has already been added. Abort.
+  //     console.log("Error: " + myNewBook.title + " already exists in the library. Title not added.");
+  //     return false;
+  //   } else {  //title has not yet been added; add the book.
+  //     this.myArray.push(myNewBook);
+  //     console.log(myNewBook.title + " has been added to the library.");
+  //     return true;
+  //   }
+  // }
 }
 
 
@@ -184,25 +215,30 @@ myLibrary.prototype._getBooksByAuthor = function(authorName){
 //Purpose: Takes multiple books, in the form of an array of book objects, and adds the objects to your books array.
 //Return: number - number of books successfully added, 0 if no books were added.
 // Call like:   DansLibrary.addBooks(DansLibrary.myBookShelf);
-myLibrary.prototype._addBooks = function(books){
+myLibrary.prototype._addBooks = function(){
   var bookToAdd = this._getBooksToAdd();
 
   for(var i = 0; i<bookToAdd.length; i++){
-    this._addbook()
+    this._addbook(bookToAdd[i]);
   }
-
-
-  var i = this.myArray.length;
-  this.myArray = this.myArray.concat(books);  //add array myBookshelf to this.myArray
-  var j = this.myArray.length;
-  return j - i;   //return the number of books added.
+alert("TEST");
+  // var i = this.myArray.length;
+  // this.myArray = this.myArray.concat(books);  //add array myBookshelf to this.myArray
+  // var j = this.myArray.length;
+  // return j - i;   //return the number of books added.
 }
-
 
 
 //Get the values of the book the user wants to add and verify the data is valid.
 myLibrary.prototype._getBooksToAdd = function(){
   var booksToAdd = [];
+  var booksInList = document.getElementByID('addMultiList');
+  alert(booksInList);
+  return; //*********************************************************
+
+  for(var i = 0; i < booksToAdd; i++){
+
+  }
 
   $.each($("#addMultiList>li>input"), function(Index, val){
       var bookProperty =$(this).val();
