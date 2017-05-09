@@ -2,6 +2,7 @@ var myLibrary = function(){};
 
 myLibrary.prototype.init = function(){  //anything in init runs on page load
   this.$jumbo=$(".jumbotron ul"); //global variable to refer to the <UL> element in the jumbotron.
+  this.$results=$(".well ul");
   this._bindEvents();
   this._addMultiple();
 };
@@ -82,9 +83,9 @@ myLibrary.prototype.myBookShelf = [myNewBook1, myNewBook2, myNewBook3, myNewBook
 myLibrary.prototype._showLibrary = function(){
   // this.$jumbo.empty();
   $jumbo = $(".jumbotron ul").empty();
-  var self = $jumbo;
-  DansLibrary.myArray.forEach(function(book){
-    self.append('<li class="shelf"><strong>' + book.title + '</strong> by ' + book.author + '</li>');
+  var self = this.$jumbo;
+  DansLibrary.myArray.forEach(function(newBook){
+    self.append('<li class="shelf"><strong>' + newBook.title + '</strong> by ' + newBook.author + '</li>');
   });
 }
 
@@ -94,12 +95,20 @@ myLibrary.prototype._showLibrary = function(){
 //Call like:    DansLibrary.addBook(myNewBook1);
 myLibrary.prototype._addBook = function(myNewBook){
       for(var i = 0; i < this.myArray.length; i++){
+        $results = $(".well ul").empty();
+        var self = this.$results;
+
         if(this.myArray[i].title == myNewBook.title){
-            alert(myNewBook.title + " already exists in the library.") //Maybe I could put the error message in the Results section? ##########################################################
+            $results = $(".well ul");
+            var self = this.$results;
+            self.append('<li class="shelf"><strong>' + myNewBook.title + "</strong> already exists in the library. Not added." + '</li>')
             return false;
         }
       }
       this.myArray.push(myNewBook);
+      self = this.$jumbo;
+      self.append('<li class="shelf"><strong>' + myNewBook.title + '</strong> by ' + myNewBook.author + '</li>');
+
 }
 
 
@@ -125,22 +134,25 @@ myLibrary.prototype._removeBookByTitle = function(title){
 //Return: boolean true if the book(s) were removed, false if no books match.
 //Call like:    DansLibrary.removeBookByAuthor("king");
 myLibrary.prototype._removeBookByAuthor = function(authorName){
+  var display=$(".jumbotron ul>li");
+  var title=$("#lowerInput").val();
   var intRemoved = 0;
   if(this.myArray.length > 0){
     for(var i = 0; i < this.myArray.length; i++){
       if(this.myArray[i].author.toLowerCase() == authorName.toLowerCase()){
         this.myArray.splice([i],1);
+        display[i].remove();
         intRemoved++;
         i--;    //when removing books, array.length decreases. Decrease i to compensate.
       }
     }
   }
+  $results = $(".well ul").empty();
+  var self = this.$results;
   if (intRemoved > 0){
-    console.log(intRemoved + " books by " + authorName + " removed from library.");
-    return true;
+    self.append('<li class="shelf">' + intRemoved + " books by " + authorName + " removed from library.");
   } else {
-    console.log("Error: No books found by " + authorName + " in library.");
-    return false;
+    self.append('<li class="shelf">' + "Error: No books found by " + authorName + " in library.");
   }
 }
 
@@ -241,9 +253,12 @@ myLibrary.prototype._getAuthors = function(){
     authorsArray.push(this.myArray[i].author);  //if the list of authors is empty, add the author.
     }
   }
-  if(authorsArray.length > 0){
-    console.log(authorsArray.length + " authors found in the library.");
+  $results = $(".well ul").empty();
+  var self = this.$results;
+  for(var i = 0; i < authorsArray; i++) {
+    self.append()
   }
+
   return authorsArray;
 }
 
