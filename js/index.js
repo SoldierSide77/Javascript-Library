@@ -11,7 +11,7 @@ var DansLibrary = new myLibrary();
 
 myLibrary.prototype._bindEvents = function(){
   //  $(.addBook).on("click", $.proxy(this._addBook, this));  //button removed
-  $("#addButton").on("click", $.proxy(this._addMultiple, this));  //the lines below need to match the id's of the buttons, like this one does.
+  $("#addButton").on("click", $.proxy(this._addMultiple, this));
   $("#btn-removeBookByTitle").on("click", $.proxy(this._removeBookByTitle, this));
   $("#btn-removeBookByAuthor").on("click", $.proxy(this._removeBookByAuthor, this));
   $("#btn-getRandomBook").on("click", $.proxy(this._getRandomBook, this));
@@ -28,16 +28,16 @@ myLibrary.prototype._bindEvents = function(){
 //Add multiple books. Inject dynamic inputs.
 myLibrary.prototype._addMultiple = function(){
   intBooks++;
-  var bookList=$("#addMulti>ul");  //assign bookList to refer to the list of books in the Add New Book(s) section.
-  var appendText1 = '<li>'+
+  var bookList=$(".addMultiList");  //assign bookList to refer to the list of books in the Add New Book(s) section.
+  var appendText1 = '<li class="addList">'+
       '<label for="title" class="lMargin1 lMargin2">Title:</label>'+
-      '<input type="text" id="titleIn" class="form-control long-input">'+
+      '<input type="text" class="titleIn form-control long-input">'+
       '<label for="author" class="lMargin2">Author:</label>'+
-      '<input type="text" id="authorIn" class="form-control">'+
+      '<input type="text" class="authorIn form-control">'+
       '<label for="pages class="lMargin2">Number of Pages:</label>'+
-      '<input type="text" id="pagesIn" class="form-control short-input">'+
+      '<input type="text" class="pagesIn form-control short-input">'+
       '<label for="Date class="lMargin2">Published Date:</label>'+
-      '<input type="text" id="dateIn" class="form-control short-md-input">'
+      '<input type="text" class="dateIn form-control short-md-input">'
   ;
 
   if(intBooks ==1){ //when on the first row, add the plus button.
@@ -46,8 +46,7 @@ myLibrary.prototype._addMultiple = function(){
   appendText1 += '</li> <hr>';
 
   bookList.append(appendText1);
-  this._bindEvents();
-
+  $("#addButton").on("click", $.proxy(this._addMultiple, this));
 }
 
 function newBook(author, title, numberOfPages, publishedDate, series, seriesOrder){
@@ -80,48 +79,27 @@ myLibrary.prototype.myArray = [];
 myLibrary.prototype.myBookShelf = [myNewBook1, myNewBook2, myNewBook3, myNewBook4, myNewBook5, myNewBook6, myNewBook7, myNewBook8, myNewBook9, myNewBook10];
 
 
+myLibrary.prototype._showLibrary = function(){
+  // this.$jumbo.empty();
+  $jumbo = $(".jumbotron ul").empty();
+  var self = $jumbo;
+  DansLibrary.myArray.forEach(function(book){
+    self.append('<li class="shelf"><strong>' + book.title + '</strong> by ' + book.author + '</li>');
+  });
+}
+
 
 //Purpose: Add a book object to your books array.
 //Return: boolean true if it is not already added, false if it is already added.
 //Call like:    DansLibrary.addBook(myNewBook1);
 myLibrary.prototype._addBook = function(myNewBook){
-  var booksArray = myNewBook;
-
-  if(booksArray.length=4) {
-    var bookToAdd = new newBook(booksArray[0], booksArray[1], booksArray[2], booksArray[3]);
       for(var i = 0; i < this.myArray.length; i++){
-        if(this.myArray[i].title == bookToAdd.title){
-            alert("Book aleady exists.")
+        if(this.myArray[i].title == myNewBook.title){
+            alert(myNewBook.title + " already exists in the library.") //Maybe I could put the error message in the Results section? ##########################################################
             return false;
         }
       }
-      this.myArray.push(bookToAdd);
-      // return this.
-  }
-
-
-  // var display=$(".jumbotron ul>li");
-  //
-  // if(this.myArray.length == 0){   //array is empty; add the book.
-  //     this.myArray.push(myNewBook);
-  //     console.log(myNewBook.title + " has been added to the library.");
-  //     return true;
-  // } else {
-  //   var blnMatch = false;
-  //   for(var i = 0; i < this.myArray.length; i++){
-  //     if(this.myArray[i].title == myNewBook.title){
-  //       blnMatch = true;
-  //     }
-  //   }
-  //   if(blnMatch == true){   //the title has already been added. Abort.
-  //     console.log("Error: " + myNewBook.title + " already exists in the library. Title not added.");
-  //     return false;
-  //   } else {  //title has not yet been added; add the book.
-  //     this.myArray.push(myNewBook);
-  //     console.log(myNewBook.title + " has been added to the library.");
-  //     return true;
-  //   }
-  // }
+      this.myArray.push(myNewBook);
 }
 
 
@@ -219,32 +197,24 @@ myLibrary.prototype._addBooks = function(){
   var bookToAdd = this._getBooksToAdd();
 
   for(var i = 0; i<bookToAdd.length; i++){
-    this._addbook(bookToAdd[i]);
+    this._addBook(bookToAdd[i]);
   }
-alert("TEST");
-  // var i = this.myArray.length;
-  // this.myArray = this.myArray.concat(books);  //add array myBookshelf to this.myArray
-  // var j = this.myArray.length;
-  // return j - i;   //return the number of books added.
+  this._showLibrary();
 }
 
 
 //Get the values of the book the user wants to add and verify the data is valid.
 myLibrary.prototype._getBooksToAdd = function(){
   var booksToAdd = [];
-  var booksInList = document.getElementByID('addMultiList');
-  alert(booksInList);
-  return; //*********************************************************
 
-  for(var i = 0; i < booksToAdd; i++){
-
-  }
-
-  $.each($("#addMultiList>li>input"), function(Index, val){
-      var bookProperty =$(this).val();
-      if(bookProperty != NaN && bookProperty ==""){
-        booksToAdd.push(bookProperty);
-      }
+  $.each($(".addList"), function(Index, val){
+    var titleIn = $(this).find(".titleIn").val();
+    var authorIn = $(this).find(".authorIn").val();
+    var pagesIn = $(this).find(".pagesIn").val();
+    var dateIn = $(this).find(".dateIn").val();
+    var bookToAdd = new newBook(authorIn, titleIn, pagesIn, dateIn);
+    booksToAdd.push(bookToAdd);
+    console.log(bookToAdd);
   });
   return booksToAdd;
 }
